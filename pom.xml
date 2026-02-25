@@ -45,6 +45,14 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- (Optional) SLF4J binding to remove the "NOP" logger warning -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.7</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 

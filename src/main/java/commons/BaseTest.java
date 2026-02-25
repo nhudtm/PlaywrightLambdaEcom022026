@@ -1,14 +1,13 @@
 package commons;
 
-import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import pageObjects.HomePO;
 import pageObjects.LoginPO;
 import pageObjects.MenuCategoryPO;
+import pageObjects.ProductDetailPO;
 
 import java.awt.*;
 import java.io.FileInputStream;
@@ -18,8 +17,9 @@ import java.util.Properties;
 public class BaseTest {
     protected Page page;
     protected HomePO homePO;
-    protected LoginPO loginPage;
+    protected LoginPO loginPO;
     protected MenuCategoryPO menuCategoryPO;
+    protected ProductDetailPO productDetailPO;
     Properties properties;
     FileInputStream fis;
 
@@ -60,5 +60,14 @@ public class BaseTest {
 
         return properties;
     }
+
+    // Get screen size
+    public static Dimension getScreenSize() {
+        return Toolkit.getDefaultToolkit().getScreenSize();
+    }
+
+
+
+
 
 }

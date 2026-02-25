@@ -2,6 +2,7 @@ package commons;
 
 import com.microsoft.playwright.*;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -35,7 +36,11 @@ public class PlaywrightFactory {
                 System.out.println("Please pass the correct browser name: " + browserName);
                 break;
         }
-        browserContext = browser.newContext();
+        // Set viewport size to match the screen size of main monitor
+        Dimension screenSize = BaseTest.getScreenSize();
+        int width = (int) screenSize.getWidth();
+        int height = (int) screenSize.getHeight();
+        browserContext = browser.newContext(new Browser.NewContextOptions().setViewportSize(width, height));
         page = browserContext.newPage();
         page.navigate(url);
         return page;
