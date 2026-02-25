@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.restAssured</groupId>
+    <artifactId>PlaywrightProject0126</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+<!--        Global variable for dependencies-->
+        <playwright-version>1.44.0</playwright-version>
+        <testng-version>7.10.2</testng-version>
+        <extentreports-version>5.0.8</extentreports-version>
+        <jira-version>3.0.0</jira-version>
+        <environment>TEST</environment>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.microsoft.playwright</groupId>
+            <artifactId>playwright</artifactId>
+            <version>${playwright-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>${extentreports-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version> <!-- bản mới nhất, hỗ trợ JDK 17/21 -->
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+
+<!--    Compiler/ Run test configuration-->
+    <build>
+        <plugins>
+            <!-- Compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+                <!-- Compiler code vs Java 17 -->
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                </configuration>
+            </plugin>
+
+            <!-- Run test -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.1.2</version>
+                <configuration>
+                    <!-- Run TestNG xml file -->
+                    <testFailureIgnore>false</testFailureIgnore>
+                    <suiteXmlFiles>
+                        <!-- <suiteXmlFile>src/test/resources/runOn${environment}.xml</suiteXmlFile>-->
+                        <suiteXmlFile>src/test/resources/testrunner/runOnTEST.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <!-- Argument -->
+
+                </configuration>
+            </plugin>
+        </plugins>
+
+
+    </build>
+</project>
