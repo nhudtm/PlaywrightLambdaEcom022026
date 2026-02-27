@@ -3,15 +3,19 @@ package tests.account;
 import commons.BaseTest;
 import commons.GlobalConstants;
 import jdk.jfr.Description;
+import jiraConfig.JiraCreateIssue;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import utils.PropertiesConfig;
+
+import java.util.Properties;
 
 public class LoginTC extends BaseTest {
 
-    String email = initProperties().getProperty("email");
-    String password = initProperties().getProperty("password");
+    String email = PropertiesConfig.getProp("email");
+    String password = PropertiesConfig.getProp("password");
 
 
     @BeforeMethod
@@ -21,6 +25,7 @@ public class LoginTC extends BaseTest {
 
     // Gom TC01, TC04, TC07 vào 1 test case sử dụng DataProvider để kiểm tra các trường hợp email không hợp lệ
     @Description("Verify that user cannot login with invalid email format, blank email, and email with leading/trailing spaces")
+    @JiraCreateIssue(isCreateIssue =   true)
     @Test(dataProvider = "invalidEmail")
     public void TC01_LoginWithInvalidEmailFormat(String invalidEmail) {
         myAccountPO.inputToEmailTextbox(invalidEmail);
@@ -30,6 +35,7 @@ public class LoginTC extends BaseTest {
     }
 
     @Description("Verify that user cannot login with blank email and password")
+    @JiraCreateIssue(isCreateIssue =   true)
     @Test
     public void TC02_LoginWithBlankInfo() {
         myAccountPO.clickLoginButton();
@@ -37,6 +43,7 @@ public class LoginTC extends BaseTest {
     }
 
     @Description("Verify that user can login successfully with email in different case")
+    @JiraCreateIssue(isCreateIssue =   true)
     @Test
     public void TC03_LoginWithEmailCaseSensitive() {
         myAccountPO.inputToEmailTextbox(email.toUpperCase());
@@ -57,6 +64,7 @@ public class LoginTC extends BaseTest {
 //    }
 
     @Description("Verify that user can login successfully with valid email and password")
+    @JiraCreateIssue(isCreateIssue =   true)
     @Test
     public void TC05_LoginWithValidInfo() {
         myAccountPO.inputToEmailTextbox(email);
@@ -67,6 +75,7 @@ public class LoginTC extends BaseTest {
     }
 
     @Description("Verify that user cannot login with blank password")
+    @JiraCreateIssue(isCreateIssue =   true)
     @Test
     public void TC06_LoginWithBlankPassword() {
         myAccountPO.inputToEmailTextbox(email);
@@ -85,6 +94,7 @@ public class LoginTC extends BaseTest {
 //    }
 
     @Description("Verify that user cannot login with not existed email")
+    @JiraCreateIssue(isCreateIssue =   true)
     @Test
     public void TC08_LoginWithNotExistedEmail() {
         String notExistedEmail = getRandomNumber() + email;
@@ -95,6 +105,7 @@ public class LoginTC extends BaseTest {
     }
 
     @Description("Verify that user cannot login with invalid password")
+    @JiraCreateIssue(isCreateIssue =   true)
     @Test
     public void TC09_LoginWithInvalidPassword() {
         String invalidPassword = password + getRandomNumber() ;
@@ -105,6 +116,7 @@ public class LoginTC extends BaseTest {
     }
 
     @Description("Verify that user cannot login after exceeding maximum login attempts with invalid credentials")
+    @JiraCreateIssue(isCreateIssue =   true)
     @Test
     public void TC10_LoginWithExceedAttempts() {
         // Login with invalid password multiple times to exceed the maximum login attempts

@@ -3,6 +3,7 @@ package commons;
 import com.microsoft.playwright.Page;
 import org.testng.annotations.*;
 import pageObjects.*;
+import utils.PropertiesConfig;
 
 import java.awt.*;
 import java.io.FileInputStream;
@@ -13,14 +14,15 @@ import java.util.Properties;
 import static commons.PlaywrightFactory.getPage;
 
 public class BaseTest {
+    protected PlaywrightFactory playwrightFactory;
     protected Page page;
     protected HomePO homePO;
     protected LoginPO loginPO;
     protected MenuCategoryPO menuCategoryPO;
     protected ProductDetailPO productDetailPO;
     protected MyAccountPO myAccountPO;
-    Properties properties;
-    FileInputStream fis;
+
+    protected FileInputStream fis;
 
 
 
@@ -35,9 +37,10 @@ public class BaseTest {
         // TH2 - Get Url from properties file
         // (xml file có parameter name="url" value="devUrl"
         // và properties file có key devUrl = https://ecommerce-playground.lambdatest.io)
-        properties = initProperties();
-        String appUrl = properties.getProperty(url);
-        page = new PlaywrightFactory().initBrowser(browserName, appUrl);
+
+        String appUrl = PropertiesConfig.getProp(url);
+        playwrightFactory = new PlaywrightFactory();
+        page = playwrightFactory.initBrowser(browserName, appUrl);
 
         homePO = new HomePO(page);
 
@@ -50,18 +53,18 @@ public class BaseTest {
     }
 
     //Read properties file
-    public Properties initProperties() {
-        properties = new Properties();
-        String filePath = System.getProperty("user.dir") + "/src/test/resources/config/config.properties";
-        try {
-            fis = new FileInputStream(filePath);
-            properties.load(fis);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return properties;
-    }
+//    public static Properties initProperties() {
+//        Properties prop = new Properties();
+//        String filePath = System.getProperty("user.dir") + "/src/test/resources/config/config.properties";
+//        try {
+//            java.io.FileInputStream fis = new FileInputStream(filePath);
+//            prop.load(fis);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        return prop;
+//    }
 
     // Get screen size
     public static Dimension getScreenSize() {

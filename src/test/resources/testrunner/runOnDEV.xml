@@ -3,31 +3,42 @@
 <suite name="Demo single test" parallel="tests" thread-count="2">
     <listeners>
         <listener class-name="listener.ExtentReportListener"/>
+        <listener class-name="jiraConfig.JiraListener"/>
     </listeners>
 <!--TH1: dùng url cụ thể-->
 <!--    <parameter name="url" value="https://ecommerce-playground.lambdatest.io"/>-->
 
 <!--    TH2: dùng url từ config.properties (đã được khai báo trong BaseTest)-->
     <parameter name="url" value="devUrl"/>
-<!--    <test name="Run package>-->
-<!--        <parameter name="browserName" value="chrome"/>-->
-<!--        <packages>-->
-<!--            <package name="tests.account"/>-->
-<!--        </packages>-->
+
+    <test name="Run package Chrome" >
+        <parameter name="browserName" value="chrome"/>
+        <packages>
+            <package name="tests.account"/>
+
+<!--            Run toàn bộ test trong package tests-->
+<!--            <package name="tests.*"/>-->
+        </packages>
+    </test>
+    <test name="Run package Firefox" >
+        <parameter name="browserName" value="firefox"/>
+        <packages>
+            <package name="tests.home"/>
+        </packages>
+    </test>
+
+<!--    <test name="Run on Chrome">-->
+<!--         <parameter name="browserName" value="chrome"/>-->
+<!--        <classes>-->
+<!--            <class name="tests.account.LoginTC"/>-->
+<!--        </classes>-->
 <!--    </test>-->
-    <test name="Run on Chrome">
-         <parameter name="browserName" value="chrome"/>
-        <classes>
+<!--    <test name="Run on Firefox">-->
+<!--         <parameter name="browserName" value="firefox"/>-->
+<!--        <classes>-->
 
-            <class name="tests.home.HomeTC"/>
-        </classes>
-    </test>
-    <test name="Run on Firefox">
-         <parameter name="browserName" value="firefox"/>
-        <classes>
-
-            <class name="tests.home.HomeTC"/>
-        </classes>
-    </test>
+<!--            <class name="tests.home.HomeTC"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
 </suite>

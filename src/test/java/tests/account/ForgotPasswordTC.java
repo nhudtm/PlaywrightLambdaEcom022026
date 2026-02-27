@@ -5,10 +5,11 @@ import commons.GlobalConstants;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import utils.PropertiesConfig;
 
 public class ForgotPasswordTC extends BaseTest {
 
-    String email = initProperties().getProperty("email");
+    String email = PropertiesConfig.getProp("email");
 
 
     @BeforeMethod

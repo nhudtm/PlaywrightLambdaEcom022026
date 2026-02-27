@@ -1,5 +1,10 @@
 package commons;
 
+
+import utils.PropertiesConfig;
+
+
+
 public class GlobalConstants {
     public static final String HOME_PAGE_TITLE = "Your Store";
     public static final String LOGIN_PAGE_TITLE = "Account Login";
@@ -7,4 +12,11 @@ public class GlobalConstants {
     public static final String EXCEED_ATTEMPTS_WARNING_MESSAGE = "Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour.";
     public static final String FORGOT_PASSWORD_PAGE_TITLE = "Forgot Your Password?";
     public static final String FORGOT_PASSWORD_NOT_EXISTED_EMAIL = "Warning: The E-Mail Address was not found in our records, please try again!";
+
+    //Jira
+    public static final String JIRA_SITE_URL = PropertiesConfig.getProp("jira.site.url");
+    public static final String JIRA_USERNAME = PropertiesConfig.getProp("jira.username");
+    public static final String JIRA_API_KEY = PropertiesConfig.getProp("jira.api.key");
+    public static final String JIRA_PROJECT_KEY = PropertiesConfig.getProp("jira.project.key");
+
 }

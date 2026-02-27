@@ -11,12 +11,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class PlaywrightFactory {
-    Playwright playwright;
-    Browser browser;
-    BrowserContext browserContext;
-    Page page;
-    Properties properties;
-    FileInputStream fis;
+
 
     public static ThreadLocal<Playwright> tPlaywright = new ThreadLocal<>();
     public static ThreadLocal<Browser> tBrowser = new ThreadLocal<>();
@@ -40,7 +35,7 @@ public class PlaywrightFactory {
     }
 
     //ThreadLocal - parrallel execution
-    public static Page initBrowser(String browserName, String url) {
+    public Page initBrowser(String browserName, String url) {
         tPlaywright.set(Playwright.create());
         switch (browserName) {
             case "chrome":
@@ -70,7 +65,13 @@ public class PlaywrightFactory {
     }
 
 
-        //Basic
+    //Basic
+    Playwright playwright;
+    Browser browser;
+    BrowserContext browserContext;
+    Page page;
+
+
 //    public Page initBrowser(String browserName, String url) {
 //        playwright = Playwright.create();
 //        switch (browserName){
@@ -102,4 +103,4 @@ public class PlaywrightFactory {
 //    }
 
 
-    }
+}
