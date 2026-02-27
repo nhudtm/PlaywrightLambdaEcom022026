@@ -1,18 +1,16 @@
 package commons;
 
 import com.microsoft.playwright.Page;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Parameters;
-import pageObjects.HomePO;
-import pageObjects.LoginPO;
-import pageObjects.MenuCategoryPO;
-import pageObjects.ProductDetailPO;
+import org.testng.annotations.*;
+import pageObjects.*;
 
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Properties;
+
+import static commons.PlaywrightFactory.getPage;
 
 public class BaseTest {
     protected Page page;
@@ -20,8 +18,11 @@ public class BaseTest {
     protected LoginPO loginPO;
     protected MenuCategoryPO menuCategoryPO;
     protected ProductDetailPO productDetailPO;
+    protected MyAccountPO myAccountPO;
     Properties properties;
     FileInputStream fis;
+
+
 
     @Parameters({"browserName", "url"})
     @BeforeClass
@@ -37,6 +38,7 @@ public class BaseTest {
         properties = initProperties();
         String appUrl = properties.getProperty(url);
         page = new PlaywrightFactory().initBrowser(browserName, appUrl);
+
         homePO = new HomePO(page);
 
     }
@@ -66,8 +68,15 @@ public class BaseTest {
         return Toolkit.getDefaultToolkit().getScreenSize();
     }
 
+    public int getRandomNumber() {
+        return (int) (Math.random() * 1000);
+    }
 
-
-
+    public static String takeScreenshot() {
+        String path = System.getProperty("user.dir") + "/screenshots/" + System.currentTimeMillis() + ".png";
+        byte[] screenshot = getPage().screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(true));
+        String base64String = java.util.Base64.getEncoder().encodeToString(screenshot);
+        return base64String;
+    }
 
 }

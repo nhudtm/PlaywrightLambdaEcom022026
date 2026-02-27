@@ -1,4 +1,4 @@
-package tests;
+package tests.account;
 
 public class RegisterTC {
 }

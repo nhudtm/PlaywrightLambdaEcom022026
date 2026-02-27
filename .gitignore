@@ -18,6 +18,10 @@ log4j2Logs/
 *.log
 local.log
 
+### Reports ###
+extentReport/
+screenshots/
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml

@@ -1,30 +1,33 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
-<suite name="Demo single test">
+<suite name="Demo single test" parallel="tests" thread-count="2">
+    <listeners>
+        <listener class-name="listener.ExtentReportListener"/>
+    </listeners>
 <!--TH1: dùng url cụ thể-->
 <!--    <parameter name="url" value="https://ecommerce-playground.lambdatest.io"/>-->
 
 <!--    TH2: dùng url từ config.properties (đã được khai báo trong BaseTest)-->
     <parameter name="url" value="devUrl"/>
-
+<!--    <test name="Run package>-->
+<!--        <parameter name="browserName" value="chrome"/>-->
+<!--        <packages>-->
+<!--            <package name="tests.account"/>-->
+<!--        </packages>-->
+<!--    </test>-->
     <test name="Run on Chrome">
-        <parameter name="browserName" value="chrome"/>
+         <parameter name="browserName" value="chrome"/>
         <classes>
-            <class name="tests.HomeTC"/>
+
+            <class name="tests.home.HomeTC"/>
         </classes>
     </test>
-<!--    <test name="Run on Firefox">-->
-<!--         <parameter name="browser" value="firefox"/>-->
-<!--        <classes>-->
-<!--            <class name="tests.LoginTC"/>-->
-<!--            <class name="tests.RegisterTC"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-    <!--    <test name="Run on Edge">-->
-    <!--        <parameter name="browser" value="edge"/>-->
-    <!--        <classes>-->
-    <!--            <class name="tests.tests.HomePageTest"/>-->
-    <!--            <class name="tests.tests.LoginPageTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
+    <test name="Run on Firefox">
+         <parameter name="browserName" value="firefox"/>
+        <classes>
+
+            <class name="tests.home.HomeTC"/>
+        </classes>
+    </test>
+
 </suite>

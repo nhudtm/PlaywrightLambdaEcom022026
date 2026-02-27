@@ -54,6 +54,7 @@ public class HomePO extends MenuCategoryPO {
     }
 
     public String getFirstProductNameInTopProducts() {
+
         return firstProductNameInTopProducts.textContent();
     }
 
@@ -82,7 +83,7 @@ public class HomePO extends MenuCategoryPO {
     }
 
     public String getLoginAlertMessageText() {
-        return loginAlertMessage.textContent();
+        return loginAlertMessage.textContent().replaceAll("\\s+", " ").trim();
     }
 
     public void clickLoginAlertClosePopup() {

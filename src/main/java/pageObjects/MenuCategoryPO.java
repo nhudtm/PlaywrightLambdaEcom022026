@@ -2,6 +2,7 @@ package pageObjects;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 
 public class MenuCategoryPO {
     protected Page page;
@@ -42,10 +43,24 @@ public class MenuCategoryPO {
     }
 
     public String getCartCompareWishlistPopupText() {
-        return cartCompareWishlistPopup.textContent();
+        return cartCompareWishlistPopup.textContent().replaceAll("\\s+", " ").trim();
     }
 
     public void clickToCartCompareWishlistClosePopup() {
         cartCompareWishlistPopupCloseButton.click();
+    }
+
+    public MyAccountPO clickMyAccountMenuItem() {
+        myAccountLink.click();
+        return new MyAccountPO(page);
+    }
+
+    public void openHomePage() {
+        homeMenuItem.click();
+    }
+
+    public void waitForHomePageLoaded() {
+//        page.locator("//div[@id='entry_218399']//div[contains(@class,'swiper-slide')][1]").waitFor();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 }
