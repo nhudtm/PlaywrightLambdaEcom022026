@@ -117,8 +117,8 @@
                     <!-- Run TestNG xml file -->
                     <testFailureIgnore>false</testFailureIgnore>
                     <suiteXmlFiles>
-                        <!-- <suiteXmlFile>src/test/resources/runOn${environment}.xml</suiteXmlFile>-->
-                        <suiteXmlFile>src/test/resources/testrunner/runOnTEST.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/testrunner/runOn${environment}.xml</suiteXmlFile>
+                        <!-- <suiteXmlFile>src/test/resources/testrunner/runOnTEST.xml</suiteXmlFile> -->
                     </suiteXmlFiles>
                     <!-- Argument -->
 

@@ -11,28 +11,36 @@
 <!--    TH2: dùng url từ config.properties (đã được khai báo trong BaseTest)-->
     <parameter name="url" value="devUrl"/>
 
-    <test name="Run package Chrome" >
-        <parameter name="browserName" value="chrome"/>
-        <packages>
-            <package name="tests.account"/>
+<!--    <test name="Run package Chrome" >-->
+<!--        <parameter name="browserName" value="chrome"/>-->
+<!--        <packages>-->
+<!--            <package name="tests.account"/>-->
 
-<!--            Run toàn bộ test trong package tests-->
-<!--            <package name="tests.*"/>-->
-        </packages>
-    </test>
-    <test name="Run package Firefox" >
-        <parameter name="browserName" value="firefox"/>
-        <packages>
-            <package name="tests.home"/>
-        </packages>
-    </test>
-
-<!--    <test name="Run on Chrome">-->
-<!--         <parameter name="browserName" value="chrome"/>-->
-<!--        <classes>-->
-<!--            <class name="tests.account.LoginTC"/>-->
-<!--        </classes>-->
+<!--&lt;!&ndash;            Run toàn bộ test trong package tests&ndash;&gt;-->
+<!--&lt;!&ndash;            <package name="tests.*"/>&ndash;&gt;-->
+<!--        </packages>-->
 <!--    </test>-->
+<!--    <test name="Run package Firefox" >-->
+<!--        <parameter name="browserName" value="firefox"/>-->
+<!--        <packages>-->
+<!--            <package name="tests.home"/>-->
+<!--        </packages>-->
+<!--    </test>-->
+
+    <test name="Run on Chrome">
+         <parameter name="browserName" value="chrome"/>
+        <classes>
+            <class name="auth.AuthStateTest"/>
+            <class name="tests.home.HomeTC_WithAutoLogin"/>
+        </classes>
+    </test>
+    <test name="Run on Firefox">
+         <parameter name="browserName" value="firefox"/>
+        <classes>
+            <class name="auth.AuthStateTest"/>
+            <class name="tests.home.HomeTC_WithAutoLogin"/>
+        </classes>
+    </test>
 <!--    <test name="Run on Firefox">-->
 <!--         <parameter name="browserName" value="firefox"/>-->
 <!--        <classes>-->

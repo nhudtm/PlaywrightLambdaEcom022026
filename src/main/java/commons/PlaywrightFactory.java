@@ -8,6 +8,8 @@ import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 public class PlaywrightFactory {
@@ -63,6 +65,39 @@ public class PlaywrightFactory {
         getPage().navigate(url);
         return getPage();
     }
+
+    //With Login state - ThreadLocal - parrallel execution
+    public Page initBrowserWithAuth(String browserName, String url, String storagePath) {
+        tPlaywright.set(Playwright.create());
+        switch (browserName) {
+            case "chrome":
+                tBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+                break;
+            case "firefox":
+                tBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+                break;
+            case "safari":
+                tBrowser.set(getPlaywright().webkit().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+                break;
+            case "chromium":
+                tBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(false)));
+                break;
+            default:
+                System.out.println("Please pass the correct browser name: " + browserName);
+                break;
+        }
+        // Set viewport size to match the screen size of main monitor
+        Dimension screenSize = BaseTest.getScreenSize();
+        int width = (int) screenSize.getWidth();
+        int height = (int) screenSize.getHeight();
+        tBrowserContext.set(getBrowser().newContext(new Browser.NewContextOptions()
+                .setViewportSize(width, height)
+                .setStorageStatePath(Paths.get(storagePath))));
+        tPage.set(getBrowserContext().newPage());
+        getPage().navigate(url);
+        return getPage();
+    }
+
 
 
     //Basic
