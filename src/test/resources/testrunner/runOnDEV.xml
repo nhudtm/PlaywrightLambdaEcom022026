@@ -28,7 +28,7 @@
 <!--    </test>-->
 
     <test name="Run on Chrome">
-         <parameter name="browserName" value="chrome"/>
+         <parameter name="browserName" value="chromium"/>
         <classes>
             <class name="auth.AuthStateTest"/>
             <class name="tests.home.HomeTC_WithAutoLogin"/>

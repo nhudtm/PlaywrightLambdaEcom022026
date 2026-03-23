@@ -1,0 +1,36 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Run all tests on TEST" parallel="tests" thread-count="2">
+    <listeners>
+        <listener class-name="listener.ExtentReportListener"/>
+        <listener class-name="jiraConfig.JiraListener"/>
+    </listeners>
+
+    <parameter name="url" value="devUrl"/>
+
+    <test name="Run all tests on Chrome">
+        <parameter name="browserName" value="chromium"/>
+        <classes>
+            <class name="auth.AuthStateTest"/>
+            <class name="tests.home.HomeTC"/>
+            <class name="tests.home.HomeTC_WithAutoLogin"/>
+            <class name="tests.account.LoginTC"/>
+            <class name="tests.account.ForgotPasswordTC"/>
+            <class name="tests.account.RegisterTC"/>
+            <class name="tests.cart.CartTC"/>
+        </classes>
+    </test>
+
+    <test name="Run all tests on Firefox">
+        <parameter name="browserName" value="firefox"/>
+        <classes>
+            <class name="auth.AuthStateTest"/>
+            <class name="tests.home.HomeTC"/>
+            <class name="tests.home.HomeTC_WithAutoLogin"/>
+            <class name="tests.account.LoginTC"/>
+            <class name="tests.account.ForgotPasswordTC"/>
+            <class name="tests.account.RegisterTC"/>
+            <class name="tests.cart.CartTC"/>
+        </classes>
+    </test>
+</suite>

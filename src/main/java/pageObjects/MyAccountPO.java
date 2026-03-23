@@ -9,7 +9,6 @@ public class MyAccountPO extends MenuCategoryPO {
     private final Locator passwordTextbox;
     private final Locator loginButton;
     private final Locator warningMessage;
-//    private final Locator myAccountTittle;
     private final Locator forgotPasswordLink;
     private final Locator forgotPasswordPageTitle;
     private final Locator emailTextboxInForgotPassword;
@@ -66,9 +65,6 @@ public class MyAccountPO extends MenuCategoryPO {
 
     public void clickAccountRightMenuItem(String rightMenuItem) {
         page.locator("a").filter(new Locator.FilterOptions().setHasText(rightMenuItem)).last().click();
-//        System.out.println("Clicked to " + "Logout" + " in Account right menu");
-//   logoutLink.click();
-//        System.out.printf("Clicked to %s in Account right menu%n", "Logout");
     }
 
     public void clickForgottenPassword() {

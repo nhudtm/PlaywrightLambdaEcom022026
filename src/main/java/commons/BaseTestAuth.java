@@ -10,7 +10,6 @@ import org.testng.annotations.Parameters;
 import pageObjects.*;
 import utils.PropertiesConfig;
 
-import java.awt.*;
 import java.nio.file.Paths;
 
 import static commons.PlaywrightFactory.getPage;

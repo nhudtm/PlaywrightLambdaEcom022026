@@ -1,7 +1,5 @@
 package commons;
 
-import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import org.testng.annotations.*;
 import pageObjects.*;
@@ -9,12 +7,7 @@ import utils.PropertiesConfig;
 
 import java.awt.*;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Properties;
-
 import static commons.PlaywrightFactory.getPage;
 
 public class BaseTest {

@@ -1,15 +1,28 @@
 package auth;
 
-import com.microsoft.playwright.*;
-import pageObjects.HomePO;
-import pageObjects.MyAccountPO;
-import utils.PropertiesConfig;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserContext;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
+
+import pageObjects.HomePO;
+import pageObjects.MyAccountPO;
+import utils.PropertiesConfig;
+
 public class AuthStateGenerator {
+
+    private static boolean isHeadlessEnabled() {
+        String headlessFromSystem = System.getProperty("headless");
+        if (headlessFromSystem != null && !headlessFromSystem.isBlank()) {
+            return Boolean.parseBoolean(headlessFromSystem);
+        }
+        return Boolean.parseBoolean(System.getenv().getOrDefault("HEADLESS", "false"));
+    }
 
     /**
      * Generate authentication state and save to file.
@@ -22,6 +35,7 @@ public class AuthStateGenerator {
         String appUrl = PropertiesConfig.getProp("devUrl");
         String email = PropertiesConfig.getProp("email");
         String password = PropertiesConfig.getProp("password");
+        boolean isHeadless = isHeadlessEnabled();
 
         System.out.println("Generating auth state for browser: " + browserName);
 
@@ -30,13 +44,13 @@ public class AuthStateGenerator {
         switch (browserName.toLowerCase()) {
             case "chrome":
             case "chromium":
-                browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+                browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(isHeadless));
                 break;
             case "firefox":
-                browser = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(false));
+                browser = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(isHeadless));
                 break;
             case "safari":
-                browser = playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(false));
+                browser = playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(isHeadless));
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported browser: " + browserName);

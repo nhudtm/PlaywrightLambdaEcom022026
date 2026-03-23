@@ -1,16 +1,13 @@
 package commons;
 
-import com.microsoft.playwright.*;
-import com.microsoft.playwright.options.LoadState;
-import com.microsoft.playwright.options.WaitUntilState;
-
-import java.awt.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Path;
+import java.awt.Dimension;
 import java.nio.file.Paths;
-import java.util.Properties;
+
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserContext;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
 
 public class PlaywrightFactory {
 
@@ -36,21 +33,32 @@ public class PlaywrightFactory {
         return tPage.get();
     }
 
+    private boolean isHeadlessEnabled() {
+        String headlessFromSystem = System.getProperty("headless");
+        if (headlessFromSystem != null && !headlessFromSystem.isBlank()) {
+            return Boolean.parseBoolean(headlessFromSystem);
+        }
+        return Boolean.parseBoolean(System.getenv().getOrDefault("HEADLESS", "false"));
+    }
+
     //ThreadLocal - parrallel execution
     public Page initBrowser(String browserName, String url) {
         tPlaywright.set(Playwright.create());
+        boolean isHeadless = isHeadlessEnabled();
         switch (browserName) {
-            case "chrome":
-                tBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+            case "chromium":
+                tBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(isHeadless)));
                 break;
             case "firefox":
-                tBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+                tBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(isHeadless)));
                 break;
             case "safari":
-                tBrowser.set(getPlaywright().webkit().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+                tBrowser.set(getPlaywright().webkit().launch(new BrowserType.LaunchOptions().setHeadless(isHeadless)));
                 break;
-            case "chromium":
-                tBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(false)));
+            case "chrome":
+                // Dùng chrome installed trên máy thay vì chromium mặc định của Playwright
+                tBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(isHeadless)));
+
                 break;
             default:
                 System.out.println("Please pass the correct browser name: " + browserName);
@@ -69,18 +77,19 @@ public class PlaywrightFactory {
     //With Login state - ThreadLocal - parrallel execution
     public Page initBrowserWithAuth(String browserName, String url, String storagePath) {
         tPlaywright.set(Playwright.create());
+        boolean isHeadless = isHeadlessEnabled();
         switch (browserName) {
-            case "chrome":
-                tBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+            case "chromium":
+                tBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(isHeadless)));
                 break;
             case "firefox":
-                tBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+                tBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(isHeadless)));
                 break;
             case "safari":
-                tBrowser.set(getPlaywright().webkit().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+                tBrowser.set(getPlaywright().webkit().launch(new BrowserType.LaunchOptions().setHeadless(isHeadless)));
                 break;
-            case "chromium":
-                tBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(false)));
+            case "chrome":
+                tBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(isHeadless)));
                 break;
             default:
                 System.out.println("Please pass the correct browser name: " + browserName);
@@ -110,7 +119,7 @@ public class PlaywrightFactory {
 //    public Page initBrowser(String browserName, String url) {
 //        playwright = Playwright.create();
 //        switch (browserName){
-//            case "chrome":
+//            case "chromium":
 //                browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
 //                break;
 //            case "firefox":
@@ -119,7 +128,7 @@ public class PlaywrightFactory {
 //            case "safari":
 //                browser = playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(false));
 //                break;
-//            case "chromium":
+//            case "chrome":
 //                browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(false));
 //                break;
 //            default:

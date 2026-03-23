@@ -13,13 +13,32 @@ public class PropertiesConfig {
         String filePath = System.getProperty("user.dir") + "/src/test/resources/config/config.properties";
         try (FileInputStream fis = new FileInputStream(filePath)) {
             PROPS.load(fis);
-        } catch (IOException e) {
-            throw new RuntimeException("Không thể đọc file cấu hình", e);
+        } catch (IOException ignored) {
         }
     }
 
     public static String getProp(String key) {
+        String systemProperty = System.getProperty(key);
+        if (systemProperty != null && !systemProperty.isBlank()) {
+            return systemProperty;
+        }
+
+        String envRawKey = System.getenv(key);
+        if (envRawKey != null && !envRawKey.isBlank()) {
+            return envRawKey;
+        }
+
+        String normalizedEnvKey = normalizeKey(key);
+        String envNormalizedKey = System.getenv(normalizedEnvKey);
+        if (envNormalizedKey != null && !envNormalizedKey.isBlank()) {
+            return envNormalizedKey;
+        }
+
         return PROPS.getProperty(key);
+    }
+
+    private static String normalizeKey(String key) {
+        return key.toUpperCase().replaceAll("[^A-Z0-9]", "_");
     }
 
 }

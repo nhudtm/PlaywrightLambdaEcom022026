@@ -3,9 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.restAssured</groupId>
-    <artifactId>PlaywrightProject0126</artifactId>
+    <groupId>com.playwrightProject0226</groupId>
+    <artifactId>PlaywrightProject0226</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -14,11 +13,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 <!--        Global variable for dependencies-->
-        <playwright-version>1.44.0</playwright-version>
+        <playwright-version>1.58.0</playwright-version>
         <testng-version>7.10.2</testng-version>
         <extentreports-version>5.0.8</extentreports-version>
         <jira-version>3.0.0</jira-version>
-        <environment>TEST</environment>
+        <environment>DEV</environment>
     </properties>
     <dependencies>
         <dependency>
@@ -41,6 +40,13 @@
             <scope>provided</scope>
         </dependency>
 
+<!-- RestAssured dùng để test API, nếu không test API thì có thể bỏ qua dependency này -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>5.3.0</version>
+        </dependency>
+
         <!-- (Optional) SLF4J binding to remove the "NOP" logger warning -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -48,12 +54,6 @@
             <version>2.0.7</version>
             <scope>test</scope>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>org.hamcrest</groupId>-->
-<!--            <artifactId>hamcrest</artifactId>-->
-<!--            <version>2.2</version>-->
-<!--        </dependency>-->
 
         <dependency>
             <groupId>org.testng</groupId>
@@ -67,12 +67,12 @@
             </exclusions>
         </dependency>
 
-        <!--        Dùng để xử lý file, vd: copy file, xóa file, ...-->
-<!--        <dependency>-->
-<!--            <groupId>commons-io</groupId>-->
-<!--            <artifactId>commons-io</artifactId>-->
-<!--            <version>2.14.0</version>-->
-<!--        </dependency>-->
+               <!-- Dùng để xử lý file, vd: copy file, xóa file, ...-->
+       <dependency>
+           <groupId>commons-io</groupId>
+           <artifactId>commons-io</artifactId>
+           <version>2.14.0</version>
+       </dependency>
 
         <!-- pom.xml -->
         <dependency>
@@ -80,18 +80,7 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.13.0</version>
         </dependency>
-
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>5.4.0</version>
-            <!--            <scope>test</scope>-->
-        </dependency>
-
-
     </dependencies>
-
-
 
 <!--    Compiler/ Run test configuration-->
     <build>
@@ -125,7 +114,5 @@
                 </configuration>
             </plugin>
         </plugins>
-
-
     </build>
 </project>

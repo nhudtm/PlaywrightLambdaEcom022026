@@ -4,7 +4,6 @@ import com.microsoft.playwright.*;
 import commons.BaseTest;
 import commons.PlaywrightFactory;
 import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import pageObjects.HomePO;
 import pageObjects.MyAccountPO;
