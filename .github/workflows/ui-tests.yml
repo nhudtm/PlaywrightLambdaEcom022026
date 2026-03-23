@@ -1,5 +1,10 @@
 name: UI Tests (Playwright + TestNG)
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 on:
   push:
     branches:
@@ -100,3 +105,21 @@ jobs:
           name: allure-report
           path: target/allure-report
           if-no-files-found: ignore
+
+      - name: Upload Allure Pages artifact
+        if: always()
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: target/allure-report
+
+  deploy-allure-pages:
+    needs: test
+    if: always() && github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

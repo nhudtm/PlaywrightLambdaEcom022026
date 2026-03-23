@@ -113,6 +113,14 @@ Workflow file: `.github/workflows/ui-tests.yml`
 - The framework now supports environment-variable based config resolution (env/system properties first, then local file fallback).
 - Browser headless mode is CI-friendly via `HEADLESS=true`.
 
+### Optional local pre-commit protection
+Block commits that accidentally stage generated report artifacts (`screenshots`, `extentReport`, `allure-*`).
+
+Enable once per local clone:
+```bash
+git config core.hooksPath .githooks
+```
+
 ## Reports
 After execution:
 - Extent HTML report: `extentReport/TestExecutionReport.html`

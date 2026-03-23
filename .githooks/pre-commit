@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+staged_files="$(git diff --cached --name-only --diff-filter=ACMR)"
+
+if [[ -z "${staged_files}" ]]; then
+  exit 0
+fi
+
+blocked_patterns=(
+  '^extentReport/'
+  '^screenshots/'
+  '^allure-results/'
+  '^allure-report/'
+  '^target/allure-results/'
+  '^target/allure-report/'
+)
+
+blocked_files=()
+while IFS= read -r file; do
+  [[ -z "${file}" ]] && continue
+  for pattern in "${blocked_patterns[@]}"; do
+    if [[ "${file}" =~ ${pattern} ]]; then
+      blocked_files+=("${file}")
+      break
+    fi
+  done
+done <<< "${staged_files}"
+
+if (( ${#blocked_files[@]} > 0 )); then
+  echo "❌ Commit blocked: generated report artifacts are staged."
+  echo
+  echo "Remove these from staging:"
+  for file in "${blocked_files[@]}"; do
+    echo "  - ${file}"
+  done
+  echo
+  echo "Suggested command:"
+  echo "  git restore --staged ${blocked_files[*]}"
+  echo
+  echo "If this is intentional, bypass once with: git commit --no-verify"
+  exit 1
+fi
+
+exit 0
