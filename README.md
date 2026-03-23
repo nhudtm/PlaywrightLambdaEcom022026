@@ -119,6 +119,35 @@ After execution:
 - TestNG reports: `target/surefire-reports/`
 - Screenshots: `screenshots/`
 
+## Allure Reports
+Interactive web-based test reports with detailed analytics.
+
+### Generate Allure Report Locally
+```bash
+# Run tests
+mvn test -Denvironment=TEST
+
+# Generate Allure report
+mvn allure:report
+
+# View report in browser
+mvn allure:serve
+```
+
+Report location: `target/allure-report/index.html`
+
+### CI/CD Integration
+- GitHub Actions automatically generates Allure reports on every test run
+- Reports are uploaded as artifacts for 90 days (GitHub default)
+- Download: Go to PR/Commit → Artifacts → `allure-report.zip`
+
+### Allure Features
+- Test hierarchy and categorization
+- Timeline view of execution
+- Failure analysis and screenshots
+- Trend graphs (requires multiple runs)
+- Parallel execution visualization
+
 ## Test Coverage (Demo)
 Implemented demo test cases are currently grouped as below:
 

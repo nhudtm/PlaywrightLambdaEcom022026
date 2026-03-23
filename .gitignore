@@ -21,6 +21,8 @@ local.log
 ### Reports ###
 extentReport/
 screenshots/
+allure-results/
+allure-report/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

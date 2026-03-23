@@ -1,31 +1,35 @@
 package listener;
 
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.MediaEntityBuilder;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import org.testng.ITestContext;
-import org.testng.ITestListener;
-import org.testng.ITestResult;
+import static commons.BaseTest.takeScreenshot;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 
-import static commons.BaseTest.takeScreenshot;
+import org.testng.ITestContext;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 
 public class ExtentReportListener implements ITestListener {
 
     private static final String OUTPUT_FOLDER = "./extentReport/";
     private static final String FILE_NAME = "TestExecutionReport.html";
+    private static final Path SCREENSHOTS_FOLDER = Paths.get("./screenshots/");
 
     private static ExtentReports extent = init();
     public static ThreadLocal<ExtentTest> test = new ThreadLocal<ExtentTest>();
     private static ExtentReports extentReports;
+    private static boolean screenshotsCleaned = false;
 
 
     private static ExtentReports init() {
@@ -58,6 +62,10 @@ public class ExtentReportListener implements ITestListener {
 
     @Override
     public synchronized void onStart(ITestContext context) {
+        if (!screenshotsCleaned) {
+            cleanScreenshotsFolder();
+            screenshotsCleaned = true;
+        }
         System.out.println("Test Suite started!");
 
     }
@@ -118,6 +126,27 @@ public class ExtentReportListener implements ITestListener {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);
         return calendar.getTime();
+    }
+
+    private void cleanScreenshotsFolder() {
+        try {
+            if (Files.exists(SCREENSHOTS_FOLDER)) {
+                Files.walk(SCREENSHOTS_FOLDER)
+                        .sorted(Comparator.reverseOrder())
+                        .filter(path -> !path.equals(SCREENSHOTS_FOLDER))
+                        .forEach(path -> {
+                            try {
+                                Files.deleteIfExists(path);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+            }
+            Files.createDirectories(SCREENSHOTS_FOLDER);
+            System.out.println("Screenshots folder cleaned before test cycle.");
+        } catch (Exception e) {
+            System.out.println("Cannot clean screenshots folder: " + e.getMessage());
+        }
     }
 
 }

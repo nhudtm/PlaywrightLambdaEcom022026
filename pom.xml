@@ -80,6 +80,18 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.13.0</version>
         </dependency>
+
+        <!-- Allure Reports -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>2.25.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-commandline</artifactId>
+            <version>2.25.0</version>
+        </dependency>
     </dependencies>
 
 <!--    Compiler/ Run test configuration-->
@@ -109,8 +121,19 @@
                         <suiteXmlFile>src/test/resources/testrunner/runOn${environment}.xml</suiteXmlFile>
                         <!-- <suiteXmlFile>src/test/resources/testrunner/runOnTEST.xml</suiteXmlFile> -->
                     </suiteXmlFiles>
-                    <!-- Argument -->
+                    <systemPropertyVariables>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
 
+            <!-- Allure Maven Plugin -->
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.13.0</version>
+                <configuration>
+                    <reportVersion>2.25.0</reportVersion>
                 </configuration>
             </plugin>
         </plugins>

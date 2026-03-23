@@ -4,6 +4,7 @@
     <listeners>
         <listener class-name="listener.ExtentReportListener"/>
         <listener class-name="jiraConfig.JiraListener"/>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
     </listeners>
 <!--TH1: dùng url cụ thể-->
 <!--    <parameter name="url" value="https://ecommerce-playground.lambdatest.io"/>-->

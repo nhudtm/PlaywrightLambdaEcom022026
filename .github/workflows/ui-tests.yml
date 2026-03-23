@@ -57,6 +57,10 @@ jobs:
           HEADLESS: "true"
         run: mvn -B -Denvironment=TEST test
 
+      - name: Generate Allure report
+        if: always()
+        run: mvn allure:report
+
       - name: Upload surefire reports
         if: always()
         uses: actions/upload-artifact@v5
@@ -79,4 +83,20 @@ jobs:
         with:
           name: screenshots
           path: screenshots
+          if-no-files-found: ignore
+
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: allure-results
+          path: target/allure-results
+          if-no-files-found: ignore
+
+      - name: Upload Allure report
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: allure-report
+          path: target/allure-report
           if-no-files-found: ignore
