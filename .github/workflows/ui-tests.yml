@@ -1,5 +1,8 @@
 name: UI Tests (Playwright + TestNG)
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 permissions:
   contents: read
   pages: write
