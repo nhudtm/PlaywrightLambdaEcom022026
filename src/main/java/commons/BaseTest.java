@@ -1,14 +1,25 @@
 package commons;
 
-import com.microsoft.playwright.Page;
-import org.testng.annotations.*;
-import pageObjects.*;
-import utils.PropertiesConfig;
+import static commons.PlaywrightFactory.getPage;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.HeadlessException;
+import java.awt.Toolkit;
 import java.io.FileInputStream;
 import java.nio.file.Paths;
-import static commons.PlaywrightFactory.getPage;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
+
+import com.microsoft.playwright.Page;
+
+import pageObjects.HomePO;
+import pageObjects.LoginPO;
+import pageObjects.MenuCategoryPO;
+import pageObjects.MyAccountPO;
+import pageObjects.ProductDetailPO;
+import utils.PropertiesConfig;
 
 public class BaseTest {
     protected PlaywrightFactory playwrightFactory;
@@ -63,9 +74,17 @@ public class BaseTest {
 //        return prop;
 //    }
 
-    // Get screen size
+    // Get screen size - with fallback for headless CI environments
     public static Dimension getScreenSize() {
-        return Toolkit.getDefaultToolkit().getScreenSize();
+        try {
+            return Toolkit.getDefaultToolkit().getScreenSize();
+        } catch (HeadlessException e) {
+            // Running on headless CI (no display). Return standard viewport size.
+            // Can be overridden via environment variable: VIEWPORT_WIDTH, VIEWPORT_HEIGHT
+            int width = Integer.parseInt(System.getenv().getOrDefault("VIEWPORT_WIDTH", "1920"));
+            int height = Integer.parseInt(System.getenv().getOrDefault("VIEWPORT_HEIGHT", "1080"));
+            return new Dimension(width, height);
+        }
     }
 
     public int getRandomNumber() {
